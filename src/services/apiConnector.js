@@ -1,3 +1,5 @@
+// This is the api connector function which we will be using to all backend calls.
+
 import axios from "axios";
 
 export const axiosInstance = axios.create({});

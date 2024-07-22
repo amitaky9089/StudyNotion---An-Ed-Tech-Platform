@@ -159,6 +159,7 @@ function Navbar() {
               </button>
             </Link>
           )}
+          {console.log("hii",token)}
           {token !== null && <ProfileDropdown />}
         </div>
         <button className="mr-4 md:hidden">

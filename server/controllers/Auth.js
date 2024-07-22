@@ -204,7 +204,7 @@ exports.login = async (req, res) => {
         }, 
         process.env.JWT_SECRET,
          {
-        expiresIn: "24000h",
+        expiresIn: "24h",
          }
     );
       //save token to user document in database
@@ -212,7 +212,7 @@ exports.login = async (req, res) => {
       user.password = undefined;
       //set cookie for token and return response
       const options = {
-        expires: new Date(Date.now() + 2 * 365 * 24 * 60 * 60 * 1000),
+        expires: new Date(Date.now() + 3* 24 * 60 * 60 * 1000),
         httpOnly: true,
       };
       return res.cookie("token", token, options).status(200).json({
