@@ -32,6 +32,7 @@ export default function PublishCourse() {
     navigate("/dashboard/my-courses")
   }
 
+  //collect data according to form and made an api call.
   const handleCoursePublish = async () => {
     // check if form has been updated or not
     if (
@@ -44,6 +45,7 @@ export default function PublishCourse() {
       goToCourses()
       return
     }
+    //if form updated then
     const formData = new FormData()
     formData.append("courseId", course._id)
     const courseStatus = getValues("public")
@@ -51,13 +53,16 @@ export default function PublishCourse() {
       : COURSE_STATUS.DRAFT
     formData.append("status", courseStatus)
     setLoading(true)
+    //api call 
     const result = await editCourseDetails(formData, token)
+    console.log("Result ",result);
     if (result) {
       goToCourses()
     }
     setLoading(false)
   }
-
+  
+  //triggered on submit
   const onSubmit = (data) => {
     // console.log(data)
     handleCoursePublish()

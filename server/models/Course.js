@@ -1,7 +1,7 @@
 const mongoose=require("mongoose")
 
 // Define the Courses schema
-const courseSchema=new mongoose.Schema({
+const coursesSchema=new mongoose.Schema({
     
     courseName:{
         type:String,
@@ -56,8 +56,9 @@ const courseSchema=new mongoose.Schema({
     status:{
         type:String,
         enum:["Draft","Published"],
-    }
+    },
+    createdAt: { type: Date, default: Date.now },
 });
 
 // Export the Courses model
-module.exports=mongoose.model("Course",courseSchema);
+module.exports=mongoose.model("Course",coursesSchema);

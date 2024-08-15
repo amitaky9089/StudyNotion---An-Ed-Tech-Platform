@@ -41,11 +41,12 @@ function Navbar() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       setLoading(true);
       try {
-        //api calls
+        //api calls for all catalog categories
         const res = await apiConnector("GET", categories.CATEGORIES_API);
+        //pushing all categories into sublink
         setSubLinks(res.data.data);
       } catch (error) {
         console.log("Could not fetch Categories.", error);
@@ -93,6 +94,7 @@ function Navbar() {
                           <p className="text-center">Loading...</p>
                         ) : subLinks?.length ? (
                           <>
+                          {/* for catalog categories  */}
                             {subLinks
                               ?.filter(
                                 (subLink) => subLink?.courses?.length > 0

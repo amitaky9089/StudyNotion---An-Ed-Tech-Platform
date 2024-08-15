@@ -28,7 +28,7 @@ export default function CourseBuilderForm() {
   const { course } = useSelector((state) => state.course)
   const { token } = useSelector((state) => state.auth)
   const [loading, setLoading] = useState(false)
-  const [editSectionName, setEditSectionName] = useState(null)
+  const [editSectionName, setEditSectionName] = useState(null) //if we are creating then we will marking it null but when we will editing then we will marking it true.
   const dispatch = useDispatch()
 
   // handle form submission
@@ -39,6 +39,7 @@ export default function CourseBuilderForm() {
     let result
 
     if (editSectionName) {
+      //if we editing the name of section then we call updateSection API and it updates value in db.
       result = await updateSection(
         {
           sectionName: data.sectionName,
@@ -49,6 +50,7 @@ export default function CourseBuilderForm() {
       )
       // console.log("edit", result)
     } else {
+      //when we creating section for the fist time we call create section API.
       result = await createSection(
         {
           sectionName: data.sectionName,
@@ -57,20 +59,23 @@ export default function CourseBuilderForm() {
         token
       )
     }
-    if (result) {
+    //if result is valid then 
+    if (result){
       // console.log("section result", result)
-      dispatch(setCourse(result))
-      setEditSectionName(null)
+      dispatch(setCourse(result)) //as we are adding the new section
+      setEditSectionName(null) 
       setValue("sectionName", "")
     }
     setLoading(false)
   }
 
+  // for cancel edit button
   const cancelEdit = () => {
-    setEditSectionName(null)
-    setValue("sectionName", "")
+    setEditSectionName(null) // to disapper the button marking the value to null
+    setValue("sectionName", "") // and also we have to set our sectionName to null
   }
 
+  //called when edit button of nestedloop clicked.
   const handleChangeEditSectionName = (sectionId, sectionName) => {
     if (editSectionName === sectionId) {
       cancelEdit()
@@ -86,17 +91,17 @@ export default function CourseBuilderForm() {
       return
     }
     if (
-      course.courseContent.some((section) => section.subSection.length === 0)
+      course.courseContent.some((section) => section.subSection.length === 0)//checking if any section is having zero subsection.
     ) {
       toast.error("Please add atleast one lecture in each section")
       return
     }
-    dispatch(setStep(3))
+    dispatch(setStep(3)) // if everything is good then move to next step.
   }
 
   const goBack = () => {
-    dispatch(setStep(1))
-    dispatch(setEditCourse(true))
+    dispatch(setStep(1)) //updating step state to 1
+    dispatch(setEditCourse(true)) // when we are moving back means we are editing the course.
   }
 
   return (
@@ -140,10 +145,11 @@ export default function CourseBuilderForm() {
           )}
         </div>
       </form>
+    {/* we will render section component if and only if it has section otherwise not  */}
       {course.courseContent.length > 0 && (
         <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
       )}
-      {/* Next Prev Button */}
+      {/* Next & Prev Button */}
       <div className="flex justify-end gap-x-3">
         <button
           onClick={goBack}

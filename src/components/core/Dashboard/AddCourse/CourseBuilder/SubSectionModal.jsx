@@ -37,6 +37,7 @@ export default function SubSectionModal({
   const { course } = useSelector((state) => state.course)
 
   useEffect(() => {
+    //means subsection is already created
     if (view || edit) {
       // console.log("modalData", modalData)
       setValue("lectureTitle", modalData.title)
@@ -65,8 +66,10 @@ export default function SubSectionModal({
     // console.log("changes after editing form values:", currentValues)
     const formData = new FormData()
     // console.log("Values After Editing form values:", currentValues)
+    //appending the updated values in formData.
     formData.append("sectionId", modalData.sectionId)
     formData.append("subSectionId", modalData._id)
+    //checking if updated
     if (currentValues.lectureTitle !== modalData.title) {
       formData.append("title", currentValues.lectureTitle)
     }
@@ -77,6 +80,7 @@ export default function SubSectionModal({
       formData.append("video", currentValues.lectureVideo)
     }
     setLoading(true)
+    //api call for updating subsection
     const result = await updateSubSection(formData, token)
     if (result) {
       // console.log("result", result)
@@ -103,13 +107,16 @@ export default function SubSectionModal({
       }
       return
     }
-
+    
+    //add case
+    //storing all the form data information.
     const formData = new FormData()
-    formData.append("sectionId", modalData)
+    formData.append("sectionId", modalData) //modalData->sectionId
     formData.append("title", data.lectureTitle)
     formData.append("description", data.lectureDesc)
     formData.append("video", data.lectureVideo)
     setLoading(true)
+    //api call to create subsection
     const result = await createSubSection(formData, token)
     if (result) {
       // update the structure of course
@@ -188,6 +195,7 @@ export default function SubSectionModal({
               </span>
             )}
           </div>
+          {/* handling button cases  */}
           {!view && (
             <div className="flex justify-end">
               <IconBtn

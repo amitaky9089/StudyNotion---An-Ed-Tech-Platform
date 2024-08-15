@@ -1,3 +1,5 @@
+//for buying any course...
+
 import { toast } from "react-hot-toast"
 
 // import rzpLogo from "../../assets/Logo/"
@@ -13,6 +15,8 @@ const {
 } = studentEndpoints
 
 // Load the Razorpay SDK from the CDN
+//src ->script that we want to load.
+// this fxn help to laod the script in runtime.
 function loadScript(src) {
   return new Promise((resolve) => {
     const script = document.createElement("script")
@@ -35,8 +39,11 @@ export async function BuyCourse(
   navigate,
   dispatch
 ) {
+  console.log("hii here")
   const toastId = toast.loading("Loading...")
+  console.log("he")
   try {
+   console.log("hwew")
     // Loading the script of Razorpay SDK
     const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js")
 
@@ -48,6 +55,7 @@ export async function BuyCourse(
     }
 
     // Initiating the Order in Backend
+   
     const orderResponse = await apiConnector(
       "POST",
       COURSE_PAYMENT_API,
@@ -78,7 +86,9 @@ export async function BuyCourse(
         email: user_details.email,
       },
       handler: function (response) {
+        //send success payment mail
         sendPaymentSuccessEmail(response, orderResponse.data.data.amount, token)
+        //check payment verification
         verifyPayment({ ...response, courses }, token, navigate, dispatch)
       },
     }
@@ -112,7 +122,9 @@ async function verifyPayment(bodyData, token, navigate, dispatch) {
     }
 
     toast.success("Payment Successful. You are Added to the course ")
+    //if we successfully enrolled in the course
     navigate("/dashboard/enrolled-courses")
+    //if we buy the course reset the cart.
     dispatch(resetCart())
   } catch (error) {
     console.log("PAYMENT VERIFY ERROR............", error)

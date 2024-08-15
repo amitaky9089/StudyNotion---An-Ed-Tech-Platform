@@ -23,7 +23,10 @@ import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import Cart from "./components/core/Dashboard/Cart";
 import AddCourse from "./components/core/Dashboard/AddCourse";
 import { ACCOUNT_TYPE } from "./utils/constants";
-
+import MyCourses from "./components/core/Dashboard/MyCourses";
+import EditCourse from "./components/core/Dashboard/EditCourse";
+import Catalog from "./pages/Catalog";
+import CourseDetails from "./pages/CourseDetails"
 function App() {
   const { user } = useSelector((state) => state.profile);
 
@@ -32,6 +35,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About/>}/>
+        <Route path="/contact" element={<Contact/>} />
+        <Route path="courses/:courseId" element={<CourseDetails />} />
+        <Route path="catalog/:catalogName" element={<Catalog/>} />
 
         <Route
           path="login"
@@ -79,23 +86,6 @@ function App() {
           }
         />
 
-        <Route
-          path="about"
-          element={
-            <OpenRoute>
-              <About />
-            </OpenRoute>
-          }
-        />
-
-        <Route
-          path="contact"
-          element={
-            <OpenRoute>
-              <Contact />
-            </OpenRoute>
-          }
-        />
 
         <Route
           element={
@@ -112,12 +102,12 @@ function App() {
           {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
             <>
               {/* <Route path="dashboard/instructor" element={<Instructor />} /> */}
-              {/* <Route path="dashboard/my-courses" element={<MyCourses />} /> */}
+              <Route path="dashboard/my-courses" element={<MyCourses />} />
               <Route path="dashboard/add-course" element={<AddCourse />} />
-              {/* <Route
+              <Route
                 path="dashboard/edit-course/:courseId"
                 element={<EditCourse />}
-              /> */}
+              />
             </>
           )}
 

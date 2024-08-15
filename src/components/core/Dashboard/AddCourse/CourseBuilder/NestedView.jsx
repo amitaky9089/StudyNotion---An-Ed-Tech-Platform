@@ -19,13 +19,14 @@ export default function NestedView({ handleChangeEditSectionName }) {
   const { token } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   // States to keep track of mode of modal [add, view, edit]
-  const [addSubSection, setAddSubsection] = useState(null)
+  const [addSubSection, setAddSubsection] = useState(null) 
   const [viewSubSection, setViewSubSection] = useState(null)
   const [editSubSection, setEditSubSection] = useState(null)
   // to keep track of confirmation modal
   const [confirmationModal, setConfirmationModal] = useState(null)
 
-  const handleDeleleSection = async (sectionId) => {
+  //making backend api call to delete Section with givenId.
+  const handleDeleteSection = async (sectionId) => {
     const result = await deleteSection({
       sectionId,
       courseId: course._id,
@@ -34,9 +35,10 @@ export default function NestedView({ handleChangeEditSectionName }) {
     if (result) {
       dispatch(setCourse(result))
     }
-    setConfirmationModal(null)
+    setConfirmationModal(null)//after marking null confirmation modal will close.
   }
 
+  //making backend api call to delete subsection.
   const handleDeleteSubSection = async (subSectionId, sectionId) => {
     const result = await deleteSubSection({ subSectionId, sectionId, token })
     if (result) {
@@ -85,7 +87,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
                       text2: "All the lectures in this section will be deleted",
                       btn1Text: "Delete",
                       btn2Text: "Cancel",
-                      btn1Handler: () => handleDeleleSection(section._id),
+                      btn1Handler: () => handleDeleteSection(section._id),
                       btn2Handler: () => setConfirmationModal(null),
                     })
                   }
@@ -101,19 +103,20 @@ export default function NestedView({ handleChangeEditSectionName }) {
               {section.subSection.map((data) => (
                 <div
                   key={data?._id}
-                  onClick={() => setViewSubSection(data)}
+                  onClick={() => setViewSubSection(data)}//by clicking on subsection, we see view modal. 
                   className="flex cursor-pointer items-center justify-between gap-x-3 border-b-2 border-b-richblack-600 py-2"
                 >
                   <div className="flex items-center gap-x-3 py-2 ">
                     <RxDropdownMenu className="text-2xl text-richblack-50" />
                     <p className="font-semibold text-richblack-50">
-                      {data.title}
+                      {data.title} 
                     </p>
                   </div>
                   <div
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => e.stopPropagation()} //by writing stopPropagation we stop the setViewSubSection effect on this div
                     className="flex items-center gap-x-3"
                   >
+                    {/* Edit button for subsection  */}
                     <button
                       onClick={() =>
                         setEditSubSection({ ...data, sectionId: section._id })
@@ -121,6 +124,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
                     >
                       <MdEdit className="text-xl text-richblack-300" />
                     </button>
+                    {/* Delete button for this subsection  */}
                     <button
                       onClick={() =>
                         setConfirmationModal({
@@ -151,6 +155,11 @@ export default function NestedView({ handleChangeEditSectionName }) {
           </details>
         ))}
       </div>
+      
+      {/* on clicking on lecture - view modal appears
+      on clicking on edit - edit modal appears 
+      on clicking on delete - confirmation modal appears  */}
+
       {/* Modal Display */}
       {addSubSection ? (
         <SubSectionModal
