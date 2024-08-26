@@ -133,10 +133,10 @@ exports.getAllRatingReview = async (req, res) => {
       data: allReviews,
     });
   } catch (error) {
-    console.log(error);
+    console.log("error while in rating and reviews controller.");
     return res.status(500).json({
       success: false,
-      message: "error while getting all rating and reviews.",
+      message: error.message,
     });
   }
 };

@@ -178,6 +178,7 @@ const enrollStudents = async (courses, userId, res) => {
       }
       console.log("Updated course: ", enrolledCourse)
 
+      //creating progress for student when it purchase the course;
       const courseProgress = await CourseProgress.create({
         courseID: courseId,
         userId: userId,

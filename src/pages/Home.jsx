@@ -8,7 +8,7 @@ import CodeBlocks from "../components/core/Homepage/CodeBlocks";
 import TimelineSection from "../components/core/Homepage/TimelineSection";
 import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection";
 import InstructorSection from "../components/core/Homepage/InstructorSection";
-import ReviewSlider from "../components/core/Homepage/ReviewSlider";
+import ReviewSlider from "../components/common/ReviewSlider";
 import Footer from "../components/common/Footer";
 import ExploreMore from "../components/core/Homepage/ExploreMore";
 
@@ -187,7 +187,7 @@ const Home = () => {
       </div>
 
       {/* { Section 3} */}
-      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
+      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent  flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
         {/* Become a instructor section */}
         <InstructorSection />
 
