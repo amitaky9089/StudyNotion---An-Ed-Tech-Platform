@@ -11,24 +11,6 @@ import { categories } from "../../services/apis";
 import { ACCOUNT_TYPE } from "../../utils/constants";
 import ProfileDropdown from "../core/Auth/ProfileDropdown";
 
-// const subLinks = [
-//   {
-//     title: "Python",
-//     link: "/catalog/python",
-//   },
-//   {
-//     title: "javascript",
-//     link: "/catalog/javascript",
-//   },
-//   {
-//     title: "web-development",
-//     link: "/catalog/web-development",
-//   },
-//   {
-//     title: "Android Development",
-//     link: "/catalog/Android Development",
-//   },
-// ];
 
 function Navbar() {
   const { token } = useSelector((state) => state.auth);
@@ -39,12 +21,13 @@ function Navbar() {
   // for catalog links
   const [subLinks, setSubLinks] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  
   useEffect(() => {
     ;(async () => {
       setLoading(true);
       try {
         //api calls for all catalog categories
+        console.log("navbar")
         const res = await apiConnector("GET", categories.CATEGORIES_API);
         //pushing all categories into sublink
         setSubLinks(res.data.data);
@@ -54,7 +37,7 @@ function Navbar() {
       setLoading(false);
     })();
   }, []);
-
+    
   // console.log("sub links", subLinks)
 
   const matchRoute = (route) => {

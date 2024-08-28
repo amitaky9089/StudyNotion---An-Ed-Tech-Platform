@@ -174,6 +174,7 @@ exports.login = async (req, res) => {
     //fetching gmail and password
     const { email, password } = req.body;
     //validate
+    console.log("amit")
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -181,6 +182,7 @@ exports.login = async (req, res) => {
       });
     }
     //check provided email user exist or not
+    
     const user = await User.findOne({ email }).populate("additionalDetails");
     //if not exist
     if (!user) {

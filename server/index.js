@@ -31,8 +31,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
-        // origin:"http://localhost:3000",
-        origin:"*",
+        origin:"http://localhost:3000",
+        // origin:"*",
         credentials:true,
         //Crendentials is essential when you need to exchange credentials (like cookies) between different sites during cross-origin requests
     })
