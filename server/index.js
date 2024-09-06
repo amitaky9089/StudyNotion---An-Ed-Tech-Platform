@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use(
     cors({
         // origin:"http://localhost:3000",
-        origin:"*",
+        origin:"studynotionfrontend-q4ihqkqqk.vercel.app",
         credentials:true,
         //Crendentials is essential when you need to exchange credentials (like cookies) between different sites during cross-origin requests
     })
